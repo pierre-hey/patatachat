@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <script type="text/javascript" th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
+
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
+    <link th:href="@{/css/style-global.css}" rel="stylesheet"/>
+    <link th:href="@{/css/style-login.css}" rel="stylesheet"/>
+    <title>Register</title>
+</head>
+<body>
+<header th:replace="~{fragments/header :: header}"></header>
+<div class="global-container">
+    <div class="card login-form login-dash p-2">
+        <div class="card-body">
+
+            <div th:if="${param.success}">
+                <div>Compte créé avec succès</div>
+            </div>
+
+            <div class="card-title text-center">
+                <h1 class="login-form-title">Créer un compte</h1>
+            </div>
+            <form method="post" role="form" th:action="@{/register/save}" th:object="${userDto}">
+
+                <div class="form-group pt-2">
+                    <label for="login">Identifiant</label>
+                    <input class="form-control" type="text" id="login" name="login" placeholder="Identifiant"/>
+                    <p th:if="${#fields.hasErrors('login')}" th:errors="*{login}"></p>
+                </div>
+
+                <div class="form-group pt-2">
+                    <label for="pwd">Mot de passe </label>
+                    <input class="form-control" type="password" id="pwd" name="password" placeholder="Mot de passe"/>
+                    <p th:each="error : ${#fields.errors('password')}" th:text="${error}">Validation error</p>
+                    <p th:each="error : ${#fields.errors('global')}" th:text="${error}">Validation error</p>
+                </div>
+
+                <div class="form-group pt-2">
+                    <label for="pwd2">Mot de passe </label>
+                    <input class="form-control" type="password" id="pwd2" name="matchingPassword" placeholder="Valider le mot de passe"
+                           th:field="*{matchingPassword}"/>
+                    <p th:each="error : ${#fields.errors('matchingPassword')}" th:text="${error}">Validation
+                        error</p>
+                    <p th:each="error : ${#fields.errors('global')}" th:text="${error}">Validation error</p>
+                </div>
+
+                <input class="btn btn-primary w-100" type="submit" value="Créer un compte">
+            </form>
+            <div class="sign-up">
+                Vous avez déjà un compte ? <a th:href="@{/login}">Se connecter</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript" th:src="@{/js/trux.js}"></script>
+</body>
+</html>

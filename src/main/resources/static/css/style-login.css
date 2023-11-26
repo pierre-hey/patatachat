@@ -1,0 +1,83 @@
+
+/* Form - Login */
+.login-dash {
+    background-color: rgb(59, 59, 59);
+    border: 3px dashed #ffc400;
+    border-radius: 5% 5% 15% 5%;
+    width: 50vh;
+    color: #fff;
+    transition: border-color 0.3s ease;
+    position: relative;
+}
+
+.login-dash:hover {
+    animation: colorChange 4s infinite alternate, borderChange 2s infinite alternate; /* Animation au survol */
+}
+
+@keyframes colorChange {
+    0% {
+        border-color: #ffc400; /* Jaune */
+    }
+    50% {
+        border-color: #00ffce; /* Bleu */
+    }
+    100% {
+        border-color: #ffc400; /* Jaune */
+    }
+}
+
+@keyframes borderChange {
+    0% {
+        border-radius: 5% 5% 5% 5%;
+    }
+    50% {
+        border-radius: 15% 15% 15% 15%;
+    }
+    100% {
+        border-radius: 25% 25% 25% 25%;
+    }
+}
+
+
+.global-container {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+form {
+    padding-top: 10px;
+    /*font-size: 14px;*/
+    margin-top: 30px;
+}
+/*
+.card-title {
+    font-weight: 200;
+}*/
+/*.card-body{
+    padding: 50px;
+}*/
+
+/*.card{
+    padding:50px;
+}*/
+.btn {
+    /*font-size: 14px;*/
+    margin-top: 20px;
+}
+
+.login-form {
+    width: 50vh;
+}
+
+.sign-up {
+    text-align: center;
+    padding: 20px 0 0;
+}
+
+.alert {
+    margin-bottom: -30px;
+    font-size: 13px;
+    margin-top: 20px;
+}

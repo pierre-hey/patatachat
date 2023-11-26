@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<head>
+    <meta charset="utf-8">
+    <title>PatataChat</title>
+
+</head>
+<body>
+
+<header th:fragments="header">
+
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark mh-5 sticky-top" aria-label="Fourth navbar example">
+        <div class="container-fluid">
+            <a class="navbar-brand brand" th:href="@{/index}">PatataChat</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample04"
+                    aria-controls="navbarsExample04" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarsExample04">
+
+                <ul class="navbar-nav me-auto mb-2 mb-md-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" th:href="@{/index}">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Link</a>
+                    </li>
+                </ul>
+
+                <ul class="navbar-nav me-lg-5 mb-2 mb-md-0">
+                    <li class="nav-item dropdown" sec:authorize="isAuthenticated()">
+                        <a class="nav-link dropdown-toggle" id="dropdown03" data-bs-toggle="dropdown"
+                           aria-expanded="false" sec:authentication="name" th:href="@{/index}"></a>
+                        <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdown03">
+                            <a class="dropdown-item" th:href="@{/index}">Mon PatataProfil</a>
+                            <a class="dropdown-item" th:href="@{/logout}">Déconnexion</a>
+                        </div>
+                    </li>
+
+                    <li class="nav-item dropdown" sec:authorize="!isAuthenticated()">
+                        <a class="nav-link dropdown-toggle" id="dropdown04" data-bs-toggle="dropdown"
+                           aria-expanded="false" th:href="@{/index}">Connexion</a>
+                        <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdown04">
+                            <a class="dropdown-item" th:href="@{/login}">Se connecter</a>
+                            <a class="dropdown-item" th:href="@{/register}">S'enregistrer</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+</header>
+</body>
+</html>

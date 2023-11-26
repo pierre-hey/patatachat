@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <script type="text/javascript" th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
+
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
+    <link th:href="@{/css/style-global.css}" rel="stylesheet"/>
+    <link th:href="@{/css/style-login.css}" rel="stylesheet"/>
+    <title>Login</title>
+</head>
+<body>
+<header th:replace="~{fragments/header :: header}"></header>
+<div class="global-container">
+    <div class="card login-form login-dash p-2">
+        <div class="card-body">
+
+            <!--			<div class="alert alert-danger alert-dismissible fade show" role="alert">Incorrect username or password.</div> -->
+            <div th:if="${param.error}">
+                <div>Identifiant ou mot de passe incorrect</div>
+            </div>
+            <div th:if="${param.logout}">
+                <div>Vous avez été déconnecté</div>
+            </div>
+
+            <div class="card-title text-center">
+                <h1 class="login-form-title">Se connecter</h1>
+            </div>
+            <form method="post" th:action="@{/login}" role="form">
+
+                <div class="form-group pt-1">
+                    <label for="login">Identifiant</label>
+                    <input class="form-control" type="text" id="login" name="login"
+                           placeholder="Login"/>
+                </div>
+
+                <div class="form-group pt-1">
+                    <label for="pwd">Mot de passe </label>
+                    <input class="form-control" type="password" id="pwd" name="password"
+                           placeholder="Password"/>
+                </div>
+
+                <input class="btn btn-primary w-100" type="submit" value="Se connecter">
+            </form>
+            <div class="sign-up">
+                Pas de compte ? <a th:href="@{/register}">Créer un compte</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript" th:src="@{/js/trux.js}"></script>
+</body>
+</html>

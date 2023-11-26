@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org"
+      xmlns="http://www.w3.org/1999/html">
+
+
+<head>
+    <meta charset="UTF-8">
+    <title>Index</title>
+    <script type="text/javascript" th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
+    <link th:href="@{/css/style-global.css}" rel="stylesheet"/>
+
+    <!--<link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />-->
+
+    <!--    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">-->
+    <!--    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>-->
+
+</head>
+<body>
+<header th:replace="~{fragments/header :: header}"></header>
+
+
+<main role="main" class="container pt-3">
+    <div class="row" style="max-height: 15vh;">
+        <h1>Bienvenue sur PatataChat !</h1>
+    </div>
+    <div class="row">
+        <div class="col-md-3 overflow-auto" style="max-height: 60vh;">
+            <!-- Liste des utilisateurs connectés -->
+            <ul> Utilisateurs :
+                <li th:each="user : ${users}" th:text="${user.login}"></li>
+            </ul>
+
+            <form th:action="@{clear}" method="post">
+                <ul>
+                    <li><input class="btn btn-danger" type="submit" value="Nettoyer"></li>
+                </ul>
+            </form>
+
+        </div>
+
+        <div class="col-md-9 overflow-auto" style="max-height: 60vh;">
+            <!-- Liste des messages -->
+            <fieldset class="border p-2" th:each="message:${messages}">
+                <legend class="float-none w-auto p-2 fs-6 fw-bold" th:text="${message.userEntity.login} + ' - '
+            + ${#temporals.format(message.getMessageDateTime(), 'dd/MM/yyyy HH:mm:ss.SSS')} "></legend>
+                <p th:text="${message.text}"></p>
+            </fieldset>
+        </div>
+
+    </div>
+
+    <!-- Formulaire pour envoyer un nouveau message -->
+    <div class="row">
+        <div class="col-md-12" style="max-height: 15vh;">
+            <form th:action="@{add}" method="post" th:object="${message}">
+                <div class="form-group pb-2">
+                    <label for="message-input">Nouveau message </label>
+                    <textarea id="message-input" class="form-control bg-dark text-light" rows="5"
+                              placeholder="Nouveau message..."
+                              th:field="*{text}"></textarea>
+                </div>
+                <input type="submit" class="btn btn-dark w-100 custom-input" value="Envoyer">
+            </form>
+        </div>
+    </div>
+
+</main>
+
+
+<!--<form th:action="@{/magicButton}" method="post">
+    <button type="submit">Magic Button</button>
+</form>-->
+
+</body>
+</html>

@@ -28,3 +28,7 @@ textarea {
 .custom-input{
     color: #ffc400;
 }
+
+.messageArea{
+    height: 60vh;
+}

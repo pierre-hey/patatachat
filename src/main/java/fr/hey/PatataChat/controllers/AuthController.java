@@ -51,7 +51,7 @@ public class AuthController {
             return "register";
         }
 
-        return "redirect:/users";
+        return "redirect:/login";
     }
 
     @GetMapping("/users")

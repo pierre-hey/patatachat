@@ -35,12 +35,14 @@ function onConnected() {
 
 
 function onError(error) {
-    connectingElement.textContent = 'Could not connect to WebSocket server. Please refresh this page to try again!';
-    connectingElement.style.color = 'red';
+    // connectingElement.textContent = 'Could not connect to WebSocket server. Please refresh this page to try again!';
+    // connectingElement.style.color = 'red';
+    console.log("Erreur WS server ! : " + error)
     setTimeout(connectWebSocket, 2000); // Reconnexion après 5 secondes
 }
 
 function connectWebSocket() {
+    console.log("Reconnexion en cours...")
     var socket = new SockJS('/ws');
     stompClient = Stomp.over(socket);
     stompClient.connect({}, onConnected, onError);

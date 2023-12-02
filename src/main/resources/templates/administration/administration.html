@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
+    <link th:href="@{/css/style-global.css}" rel="stylesheet"/>
+    <link th:href="@{/css/style-admin.css}" rel="stylesheet"/>
+    <title>Login</title>
+</head>
+<body>
+
+<div class="d-flex flex-column h-100 align-items-center justify-content-center">
+    <header th:replace="~{fragments/header :: header}"></header>
+
+    <div class="container overflow-hidden">
+        <div class="row gy-5">
+            <div class="col-3 text-center">
+                <div class="p-3 border block-global block1">
+                    <a class="text-decoration-none fw-semibold" th:href="@{user/all}">
+                        <div class="p-5 text-black">Utilisateurs</div>
+                    </a>
+                </div>
+            </div>
+
+            <div class="col-3 text-center">
+                <div class="p-3 border block-global block2">
+                    <form th:action="@{administration/magicButton}" method="post">
+                        <button type="submit" class="p-5 btn btn-primary-outline fw-semibold">
+                            Magic Button
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="col-3 text-center">
+                <div class="p-3 border block-global block3">
+                    <a class="text-decoration-none" th:href="@{#}">
+                        <div class="p-5 text-black">TODO</div>
+                    </a>
+                </div>
+            </div>
+
+            <div class="col-3 text-center">
+                <div class="p-3 border block-global block2">
+                    <a class="text-decoration-none" th:href="@{#}">
+                        <div class="p-5 text-black">TODO</div>
+                    </a></div>
+            </div>
+
+            <div class="col-3 text-center">
+                <div class="p-3 border block-global block2">
+                    <a class="text-decoration-none" th:href="@{#}">
+                        <div class="p-5 text-black">TODO</div>
+                    </a>
+                </div>
+            </div>
+
+            <div class="col-3 text-center">
+                <div class="p-3 border block-global block2">
+                    <a class="text-decoration-none" th:href="@{#}">
+                        <div class="p-5 text-black">TODO</div>
+                    </a>
+                </div>
+            </div>
+
+            <div class="col-3 text-center">
+                <div class="p-3 border block-global block2">
+                    <a class="text-decoration-none" th:href="@{#}">
+                        <div class="p-5 text-black">TODO</div>
+                    </a>
+                </div>
+            </div>
+
+            <div class="col-3 text-center">
+                <div class="p-3 border block-global block2">
+                    <a class="text-decoration-none" th:href="@{#}">
+                        <div class="p-5 text-black">TODO</div>
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/animation.js}"></script>
+</body>
+</html>

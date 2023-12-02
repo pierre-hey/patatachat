@@ -4,7 +4,7 @@
       xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8">
-    <title>Index</title>
+    <title>Patatachat !</title>
     <script type="text/javascript" th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
     <script type="text/javascript" th:src="@{/webjars/sockjs-client/sockjs.min.js}"></script>
     <script type="text/javascript" th:src="@{/webjars/stomp-websocket/stomp.min.js}"></script>
@@ -12,29 +12,19 @@
     <link th:href="@{/css/style-global.css}" rel="stylesheet"/>
 </head>
 <body>
-<header th:replace="~{fragments/header :: header}"></header>
 
-<main role="main" class="container pt-3">
-    <div class="row" style="height: 10vh;">
-        <h1>Bienvenue sur PatataChat !</h1>
-    </div>
-    <div class="row">
-        <!--        <div class="col-md-2 overflow-auto messageArea">
-                    &lt;!&ndash; Liste des utilisateurs &ndash;&gt;
-                    <h5>Utilisateurs :</h5>
-                    <ul>
-                        <li th:each="user : ${users}" th:text="${user.login}"></li>
-                    </ul>
-                    <hr class="hr"/>
-                    <form class="col-md-3 align-items-end" th:action="@{clear}" method="post">
-                        <input class="btn btn-danger" type="submit" value="Nettoyer">
-                    </form>
-                </div>-->
+<div class="d-flex flex-column h-100 align-items-center justify-content-center">
+    <header th:replace="~{fragments/header :: header}"></header>
 
-        <div class="col-md-12 overflow-auto messageArea" id="messageArea"></div>
-        <hr class="hr"/>
+
+    <!-- Begin page content -->
+    <div class="container">
         <div class="row">
-            <div class="col-md-12" style="height: 10vh;">
+            <div class="col-md-12 overflow-auto message-area" id="messageArea"></div>
+
+            <hr class="hr"/>
+
+            <div class="col-md-12 message-form">
                 <form id="messageForm" name="messageForm">
                     <div class="form-group pb-2">
                         <label for="message">Nouveau Message</label>
@@ -43,18 +33,17 @@
                         <h3 id="userName" sec:authorize="isAuthenticated()" sec:authentication="name"
                             th:hidden="true"></h3>
                     </div>
-                    <button type="submit" class="btn btn-dark w-100 custom-input">Envoyer</button>
-
-                    <form th:if="${isAdmin}" th:action="@{clear}" method="post">
-                        <input class="btn btn-danger w-100" type="submit" value="Nettoyer">
-                    </form>
-
+                    <button type="submit" class="form-group btn btn-dark w-100 custom-input">Envoyer</button>
                 </form>
+
+                <form th:if="${isAdmin}" th:action="@{/clear}" method="post">
+                    <input class="btn btn-danger w-100 form-group" type="submit" value="Nettoyer">
+                </form>
+
             </div>
         </div>
     </div>
-</main>
-
+</div>
 
 <script th:src=" @{/js/main.js}"></script>
 </body>

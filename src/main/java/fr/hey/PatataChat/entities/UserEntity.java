@@ -46,4 +46,10 @@ public class UserEntity {
             inverseJoinColumns = {@JoinColumn(name = "ROLE_ID", referencedColumnName = "ID")})
     private List<Role> roles = new ArrayList<>();
 
+    public void addRole(Role role){
+        this.getRoles().add(role);
+    }
+    public void removeRole(Role role){
+        this.getRoles().remove(role);
+    }
 }

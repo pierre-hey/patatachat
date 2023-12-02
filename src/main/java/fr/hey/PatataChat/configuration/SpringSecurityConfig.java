@@ -6,16 +6,22 @@ import org.apache.tomcat.util.descriptor.web.SecurityCollection;
 import org.apache.tomcat.util.descriptor.web.SecurityConstraint;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory;
+import org.springframework.boot.web.servlet.ServletListenerRegistrationBean;
 import org.springframework.boot.web.servlet.server.ServletWebServerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.session.SessionRegistry;
+import org.springframework.security.core.session.SessionRegistryImpl;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
+import org.springframework.security.web.session.HttpSessionEventPublisher;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
@@ -31,42 +37,52 @@ public class SpringSecurityConfig {
     }
 
     @Bean
+    public ServletListenerRegistrationBean<HttpSessionEventPublisher> httpSessionEventPublisher() {
+        return new ServletListenerRegistrationBean<>(new HttpSessionEventPublisher());
+    }
+
+    @Bean
+    public SessionRegistry sessionRegistry() {
+        return new SessionRegistryImpl();
+    }
+
+    @Bean
     public static PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http
-/*                .requiresChannel(channel -> channel.anyRequest().requiresSecure())
-                .portMapper()
-                .http(8080).mapsTo(8443) // Remplacez 8080 et 8443 par les ports appropriés
-                .and()
-                .addFilterBefore(new OncePerRequestRedirectFilter(), ChannelProcessingFilter.class)
-                .and()*/
 
+        // Déclaration d'un context pour les sessions
+        http.securityContext(securityContext -> securityContext.
+                securityContextRepository(new HttpSessionSecurityContextRepository()));
 
-              /*  .and()
-                .addFilterBefore(new OncePerRequestRedirectFilter(), ChannelProcessingFilter.class)*/
+        // Déclaration du manager de session
+        http.sessionManagement(sessionAuthenticationStrategy -> sessionAuthenticationStrategy
+                .sessionCreationPolicy(SessionCreationPolicy.NEVER)
+                .maximumSessions(1)
+                .sessionRegistry(sessionRegistry())
+                .expiredUrl("/login"));
 
-                .authorizeHttpRequests((authorize) -> authorize
-                                // Autorise tout le monde à accéder à la lecture des ressources CSS, JS, img
-                                .requestMatchers("/css/**", "/js/**", "/img/**", "/webjars/**").permitAll()
-                                // Autorise tout le monde à accéder à la page d'index via les 2 urls
-                                .requestMatchers("/", "/index").permitAll()
-                                // Autorise tout le monde à accéder à la page d'enregistrement
-                                .requestMatchers("/register/**").permitAll()
-                                // Autorise tout le monde
-                                .requestMatchers("/poc/all").permitAll()
-                                .requestMatchers("/magicButton").permitAll()
-                                // Autorise uniquement les utilisateurs connectés
-                                .requestMatchers("/poc/auth").authenticated()
-                                // Autorise uniquement les utilisateurs connectés avec le role "ADMIN"
-                                .requestMatchers("/poc/admin").hasRole("ADMIN")
-                                // Autorise uniquement les utilisateurs connectés avec le role "USER"
-                                .requestMatchers("/poc/user").hasRole("USER")
-//                                .requestMatchers("/static/**").permitAll().anyRequest().permitAll()
-                                // .requestMatchers(antMatcher("/users/**")).hasRole("ADMIN")
+        http.authorizeHttpRequests((authorize) -> authorize
+                // Autorise tout le monde à accéder à la lecture des ressources CSS, JS, img
+                .requestMatchers("/css/**", "/js/**", "/img/**", "/webjars/**").permitAll()
+                // Autorise tout le monde à accéder à la page d'index via les 2 urls
+                .requestMatchers("/", "/index").permitAll()
+                // Autorise tout le monde à accéder à la page d'enregistrement
+                .requestMatchers("/register/**").permitAll()
+                // Autorise tout le monde
+                //.requestMatchers("/poc/all").permitAll()
+                //.requestMatchers("/magicButton").permitAll()
+                // Autorise uniquement les utilisateurs connectés
+                //.requestMatchers("/poc/auth").authenticated()
+                // Autorise uniquement les utilisateurs connectés avec le role "ADMIN"
+                .requestMatchers("/administration/**").hasRole("ADMIN")
+                // Autorise uniquement les utilisateurs connectés avec le role "USER"
+                //.requestMatchers("/poc/user").hasRole("USER")
+                //.requestMatchers("/static/**").permitAll().anyRequest().permitAll()
+                // .requestMatchers(antMatcher("/users/**")).hasRole("ADMIN")
 
 //                                .requestMatchers("/register/**").permitAll()
 //                                .requestMatchers("/register/**").permitAll()
@@ -74,29 +90,27 @@ public class SpringSecurityConfig {
 //                                .requestMatchers(antMatcher("/css/**")).permitAll()
 //                                .requestMatchers("/user/**").hasRole("USER")
 //                                .requestMatchers("/users").hasRole("ADMIN")
-                                .requestMatchers("/admin/**").hasRole("ADMIN")
+                .requestMatchers("/admin/**").hasRole("ADMIN")
 
-                                //.requestMatchers("/templates/fragments/header.html").permitAll()
-                                .anyRequest().authenticated()
-                )
-                .formLogin(
-                        form -> form
-                                .loginPage("/login")
-                                .usernameParameter("login") // -> Définit quel champ du formulaire est
-                                // le "userName" du "UserDetail" de Spring qui correspond
-                                // au champ discriminant de l'identification
-                                //.loginProcessingUrl("/login")
-                                .defaultSuccessUrl("/index")
-                                .permitAll()
-                )
+                //.requestMatchers("/templates/fragments/header.html").permitAll()
+                .anyRequest().authenticated());
 
-                .logout(
-                        logout -> logout
-                                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-                                .permitAll()
-                )
-                .requiresChannel(channel -> channel
-                        .anyRequest().requiresSecure())
+        http.formLogin(
+                form -> form
+                        .loginPage("/login")
+                        .usernameParameter("login") // -> Définit quel champ du formulaire est
+                        // le "userName" du "UserDetail" de Spring qui correspond
+                        // au champ discriminant de l'identification
+                        //.loginProcessingUrl("/login")
+                        .defaultSuccessUrl("/index")
+                        .permitAll());
+
+        http.logout(
+                logout -> logout
+                        .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                        .permitAll());
+
+        http.requiresChannel(channel -> channel.anyRequest().requiresSecure())
 //                .portMapper()
 //                .http(8080).mapsTo(8443)
 //                .http(80).mapsTo(443)
@@ -104,6 +118,7 @@ public class SpringSecurityConfig {
 /*                .csrf()
                 .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())*/
         ;
+
         return http.build();
     }
 
@@ -136,15 +151,16 @@ public class SpringSecurityConfig {
      */
     @Bean
     public ServletWebServerFactory servletContainer() {
-        TomcatServletWebServerFactory tomcat = new TomcatServletWebServerFactory() {@Override
-        protected void postProcessContext(Context context) {
-            SecurityConstraint securityConstraint = new SecurityConstraint();
-            securityConstraint.setUserConstraint("CONFIDENTIAL");
-            SecurityCollection collection = new SecurityCollection();
-            collection.addPattern("/*");
-            securityConstraint.addCollection(collection);
-            context.addConstraint(securityConstraint);
-        }
+        TomcatServletWebServerFactory tomcat = new TomcatServletWebServerFactory() {
+            @Override
+            protected void postProcessContext(Context context) {
+                SecurityConstraint securityConstraint = new SecurityConstraint();
+                securityConstraint.setUserConstraint("CONFIDENTIAL");
+                SecurityCollection collection = new SecurityCollection();
+                collection.addPattern("/*");
+                securityConstraint.addCollection(collection);
+                context.addConstraint(securityConstraint);
+            }
         };
         tomcat.addAdditionalTomcatConnectors(redirectConnector());
         return tomcat;
@@ -158,13 +174,5 @@ public class SpringSecurityConfig {
         connector.setRedirectPort(55555);
         return connector;
     }
-
-
-
-
-
-
-
-
 
 }

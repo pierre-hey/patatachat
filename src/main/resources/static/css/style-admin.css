@@ -1,0 +1,16 @@
+.block-global {
+    border-radius: 15%;
+    font-size: 1.5em;
+}
+
+.block1 {
+    background-color: #00ffce;
+}
+
+.block2 {
+    background-color: #b5ff00;
+}
+
+.block3 {
+    background-color: #ff6a00;
+}

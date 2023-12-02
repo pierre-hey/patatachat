@@ -7,6 +7,9 @@ import fr.hey.PatataChat.exceptions.UserAlreadyExistException;
 import fr.hey.PatataChat.repositories.RoleRepository;
 import fr.hey.PatataChat.repositories.UserRepository;
 import fr.hey.PatataChat.services.UserService;
+import fr.hey.PatataChat.utils.RoleChecker;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -20,16 +23,17 @@ import java.util.stream.Collectors;
 @Service
 public class UserServiceImpl implements UserService {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(UserServiceImpl.class);
+
+    final private String DEFAULT_USER_ROLE = "ROLE_USER";
+
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
 
-    final private String DEFAULT_USER_ROLE = "ROLE_USER";
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository,
-                           RoleRepository roleRepository,
-                           PasswordEncoder passwordEncoder) {
+    public UserServiceImpl(UserRepository userRepository, RoleRepository roleRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
         this.passwordEncoder = passwordEncoder;
@@ -73,20 +77,37 @@ public class UserServiceImpl implements UserService {
     @Profile(value = "dev")
     public void mockCreateUserIfNotExists(String userInfo, List<String> roles) {
 
+        LOGGER.info("Création d'utilisateurs bouchon !");
         if (!loginExists(userInfo)) {
             UserEntity user = new UserEntity();
             user.setLogin(userInfo);
             user.setPassword(passwordEncoder.encode(userInfo));
             user.setRoles(mockCreateRoleIfNotExists(roles));
             mockCreateUser(user);
-            System.out.println("####################");
-            System.out.printf("Création de l'utilisateur : %s%n", user);
-            System.out.println("####################");
+            LOGGER.info("Création de l'utilisateur: {}", user.getLogin());
         } else {
-            System.out.println("####################");
-            System.out.println("L'utilisateur existe déjà");
-            System.out.println("####################");
+            LOGGER.info("L'utilisateur {} existe déjà", userInfo);
         }
+    }
+
+    @Override
+    public UserDto updateUserRole(Integer id) {
+
+        UserEntity user = findById(id);
+        Role roleAdmin = roleRepository.findByName("ROLE_ADMIN");
+
+        if (!RoleChecker.isAdmin(user)) {
+            user.addRole(roleAdmin);
+        } else {
+            user.removeRole(roleAdmin);
+        }
+        userRepository.save(user);
+
+        return convertEntityToDto(user);
+    }
+
+    private UserEntity findById(Integer id) {
+        return userRepository.findById(id).orElse(null);
     }
 
     private void mockCreateUser(UserEntity user) {
@@ -138,6 +159,7 @@ public class UserServiceImpl implements UserService {
         UserDto userDto = new UserDto();
         userDto.setLogin(user.getLogin());
         userDto.setId(user.getId());
+        userDto.setIsAdmin(RoleChecker.isAdmin(user));
         return userDto;
     }
 

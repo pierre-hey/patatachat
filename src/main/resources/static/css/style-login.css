@@ -4,10 +4,10 @@
     background-color: rgb(59, 59, 59);
     border: 3px dashed #ffc400;
     border-radius: 5% 5% 15% 5%;
-    width: 50vh;
+    /*width: 50vh;*/
     color: #fff;
     transition: border-color 0.3s ease;
-    position: relative;
+    /*position: relative;*/
 }
 
 .login-dash:hover {
@@ -39,18 +39,18 @@
 }
 
 
-.global-container {
+/*.global-container {
     height: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
-}
+}*/
 
-form {
+/*form {
     padding-top: 10px;
-    /*font-size: 14px;*/
+    !*font-size: 14px;*!
     margin-top: 30px;
-}
+}*/
 /*
 .card-title {
     font-weight: 200;
@@ -62,8 +62,9 @@ form {
 /*.card{
     padding:50px;
 }*/
+/*
 .btn {
-    /*font-size: 14px;*/
+    !*font-size: 14px;*!
     margin-top: 20px;
 }
 
@@ -80,4 +81,24 @@ form {
     margin-bottom: -30px;
     font-size: 13px;
     margin-top: 20px;
+}*/
+
+.card-content{
+    background-color: rgb(59, 59, 59);
+}
+
+.login-button{
+    /*background-color: rgb(95, 81, 107);*/
+    background-color: rgb(51, 59, 43);
+    color: #ffc400;
+
+    border : solid #ffc400 1px;
+}
+
+
+.login-button:hover {
+    color: #b5ff00;
+    text-shadow: 0 0 5px #e4fd06, 0 0 55px #ff6a00, -20px -22px 2px rgba(2, 2, 2, 0);
+    background-color: #036c4a;
+    border : solid #b5ff00 1px;
 }

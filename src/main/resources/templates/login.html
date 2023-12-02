@@ -3,54 +3,61 @@
       xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <script type="text/javascript" th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
-
     <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
     <link th:href="@{/css/style-global.css}" rel="stylesheet"/>
     <link th:href="@{/css/style-login.css}" rel="stylesheet"/>
     <title>Login</title>
 </head>
 <body>
-<header th:replace="~{fragments/header :: header}"></header>
-<div class="global-container">
-    <div class="card login-form login-dash p-2">
-        <div class="card-body">
+<div class="d-flex flex-column h-100 align-items-center justify-content-center">
+    <header th:replace="~{fragments/header :: header}"></header>
 
-            <!--			<div class="alert alert-danger alert-dismissible fade show" role="alert">Incorrect username or password.</div> -->
-            <div th:if="${param.error}">
-                <div>Identifiant ou mot de passe incorrect</div>
-            </div>
-            <div th:if="${param.logout}">
-                <div>Vous avez été déconnecté</div>
-            </div>
+    <!-- Begin page content -->
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 offset-md-3">
+                <div class="card login-dash my-5 card-content">
+                    <h2 class="text-center mt-5 brand">Patatachat</h2>
+                    <div class="text-center mb-5 text-light">Se connecter</div>
 
-            <div class="card-title text-center">
-                <h1 class="login-form-title">Se connecter</h1>
-            </div>
-            <form method="post" th:action="@{/login}" role="form">
+                    <form class="card-body p-lg-5" method="post" th:action="@{/login}">
+                        <div class="alert alert-danger alert-dismissible fade show mb-2" role="alert"
+                             th:if="${param.error}">
+                            <strong>Ho non !</strong> Identifiant ou mot de passe incorrect
+                            <button type="button" class="btn-close px-2 py-1" data-bs-dismiss="alert"
+                                    aria-label="Close"></button>
+                        </div>
+                        <div class="alert alert-info alert-dismissible fade show mb-2" role="alert"
+                             th:if="${param.logout}">
+                            <strong>Ho non !</strong> Vous avez été déconnecté
+                            <button type="button" class="btn-close px-2 py-1" data-bs-dismiss="alert"
+                                    aria-label="Close"></button>
+                        </div>
 
-                <div class="form-group pt-1">
-                    <label for="login">Identifiant</label>
-                    <input class="form-control" type="text" id="login" name="login"
-                           placeholder="Login"/>
+                        <div class="mb-3">
+                            <input class="form-control" type="text" id="login" name="login" placeholder="Identifiant"/>
+                        </div>
+
+                        <div class="mb-3">
+                            <input class="form-control" type="password" id="pwd" name="password"
+                                   placeholder="Password"/>
+                        </div>
+
+                        <div class="text-center">
+                            <input class="btn btn-primary w-75 login-button" type="submit" value="Se connecter">
+                        </div>
+                        <div id="emailHelp" class="form-text text-center mb-5 text-light">
+                            Pas de compte ? <a class="text-light fw-bold" th:href="@{/register}">Créer un
+                            compte</a>
+                        </div>
+                    </form>
                 </div>
-
-                <div class="form-group pt-1">
-                    <label for="pwd">Mot de passe </label>
-                    <input class="form-control" type="password" id="pwd" name="password"
-                           placeholder="Password"/>
-                </div>
-
-                <input class="btn btn-primary w-100" type="submit" value="Se connecter">
-            </form>
-            <div class="sign-up">
-                Pas de compte ? <a th:href="@{/register}">Créer un compte</a>
             </div>
         </div>
     </div>
 </div>
 
-
-<script type="text/javascript" th:src="@{/js/trux.js}"></script>
+<script type="text/javascript" th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/animation.js}"></script>
 </body>
 </html>

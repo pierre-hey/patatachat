@@ -1,14 +1,16 @@
 html, body {
-    height: 95%;
+    height: 100%;
 }
-header{
+/*header{
     height: 5%;
-}
+}*/
 body {
     background-color: rgb(59, 59, 59);
     color: #fff;
 }
-
+.container{
+    background-color: rgb(59, 59, 59);
+}
 textarea {
     resize: none;
 }
@@ -28,7 +30,66 @@ textarea {
 .custom-input{
     color: #ffc400;
 }
+.message-area{
+    height: 70vh;
+}
+.message-form{
+    height: 15vh;
+}
 
-.messageArea{
-    height: 60vh;
+.icon{
+    z-index: -1;
+    height: 25px;
+    width: 25px;
+    filter: invert(99%) sepia(0%) saturate(3889%) hue-rotate(200deg) brightness(110%) contrast(100%);
+}
+
+
+.alert {
+    font-size: 12px;
+    margin-bottom: 1px;
+    height: 30px;
+    line-height:30px;
+    padding:0 15px;
+
+}
+
+.table-area{
+    height: 85vh;
+}
+
+
+
+/* Message flash */
+
+.msg-flash {
+
+    text-align: center;
+    background-color: #565656;
+    color: #ff7a00;
+
+    /* Hide flash msg */
+    -moz-animation: hide-flash 0s ease-in 5s forwards;
+    /* Firefox */
+    -webkit-animation: hide-flash 0s ease-in 5s forwards;
+    /* Safari and Chrome */
+    -o-animation: hide-flash 0s ease-in 5s forwards;
+    /* Opera */
+    animation: hide-flash 0s ease-in 5s forwards;
+    -webkit-animation-fill-mode: forwards;
+    animation-fill-mode: forwards;
+}
+@keyframes hide-flash {
+    to {
+        width:0;
+        height:0;
+        overflow:hidden;
+    }
+}
+@-webkit-keyframes hide-flash {
+    to {
+        width:0;
+        height:0;
+        visibility:hidden;
+    }
 }

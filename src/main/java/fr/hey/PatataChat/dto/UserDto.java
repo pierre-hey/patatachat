@@ -16,10 +16,17 @@ import lombok.Setter;
 public class UserDto
 {
     private Integer id;
+
     @NotBlank(message = "Ne peut pas être vide")
     private String login;
+
     @NotBlank(message = "Ne peut pas être vide")
     private String password;
+
     @NotBlank(message = "Ne peut pas être vide")
     private String matchingPassword;
+
+    private Boolean isConnected;
+
+    private Boolean isAdmin;
 }

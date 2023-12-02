@@ -8,6 +8,7 @@ import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class CustomErrorController implements ErrorController {
@@ -15,22 +16,30 @@ public class CustomErrorController implements ErrorController {
     private static final Logger LOGGER = LoggerFactory.getLogger(UserController.class);
 
     @RequestMapping("/error")
-    public String handleConflict403(HttpServletRequest request) {
+    public ModelAndView handleConflict403(HttpServletRequest request) {
 
         Object status = request.getAttribute(RequestDispatcher.ERROR_STATUS_CODE);
         LOGGER.info("Erreur : " + status);
+
+        ModelAndView modelAndView = new ModelAndView();
 
         if (status != null) {
             int statusCode = Integer.parseInt(status.toString());
 
             if (statusCode == HttpStatus.NOT_FOUND.value()) {
-                return "/error/error-404";
+                modelAndView.setViewName("error/error-404");
             } else if (statusCode == HttpStatus.INTERNAL_SERVER_ERROR.value()) {
-                return "/error/error-500";
+                modelAndView.setViewName("error/error-500");
             } else if (statusCode == HttpStatus.FORBIDDEN.value()) {
-                return "/error/error-403";
+                modelAndView.setViewName("error/error-403");
             }
+        } else {
+            modelAndView.setViewName("error/error");
         }
-        return "/error/error";
+
+        // Ajouter des objets au modèle si nécessaire
+        modelAndView.addObject("customAttribute", "valeur");
+
+        return modelAndView;
     }
 }

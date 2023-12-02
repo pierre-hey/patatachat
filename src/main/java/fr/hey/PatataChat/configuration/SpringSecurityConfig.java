@@ -162,17 +162,26 @@ public class SpringSecurityConfig {
                 context.addConstraint(securityConstraint);
             }
         };
+//        tomcat.addAdditionalTomcatConnectors(redirectConnector());
         tomcat.addAdditionalTomcatConnectors(redirectConnector());
         return tomcat;
     }
 
+//    private Connector redirectConnector() {
+//        Connector connector = new Connector("org.apache.coyote.http11.Http11NioProtocol");
+//        connector.setScheme("http");
+//        connector.setPort(8080);
+//        connector.setSecure(false);
+//        connector.setRedirectPort(55555);
+//        return connector;
+//    }
+
     private Connector redirectConnector() {
         Connector connector = new Connector("org.apache.coyote.http11.Http11NioProtocol");
         connector.setScheme("http");
-        connector.setPort(8080);
+        connector.setPort(80);
         connector.setSecure(false);
-        connector.setRedirectPort(55555);
+        connector.setRedirectPort(443);
         return connector;
     }
-
 }

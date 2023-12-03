@@ -39,6 +39,35 @@ function onError(error) {
     // connectingElement.style.color = 'red';
     console.log("Erreur WS server ! : " + error)
     setTimeout(connectWebSocket, 2000); // Reconnexion après 5 secondes
+
+
+
+    // Créer un élément fieldset et p pour afficher le message
+    var htmlFieldSetElement = document.createElement('fieldset');
+    var htmlParagraphElement = document.createElement('p');
+    htmlFieldSetElement.classList.add('border', 'p-2');
+
+    // Créer un élément legend pour afficher le nom de l'émetteur
+    var htmlLegendElement = document.createElement('legend');
+    htmlLegendElement.classList.add('float-none', 'w-auto', 'p-2', 'fs-6', 'fw-bold');
+
+    // Convertir la chaîne de date en objet Date JavaScript
+    var messageDate = new Date();
+    var formattedDate = messageDate.toLocaleString(); // Formater la date selon vos besoins
+
+    // Créer le texte à insérer dans le html
+    var usernameText = document.createTextNode(error +' - ' + formattedDate);
+    var messageText = document.createTextNode('Could not connect to WebSocket server. Please refresh this page to try again!');
+
+    // Ajout du nom de l'user à son élément
+    htmlLegendElement.appendChild(usernameText);
+    htmlFieldSetElement.appendChild(htmlLegendElement);
+    // Ajout du contenu du message dans le paragraphe
+    htmlParagraphElement.appendChild(messageText);
+    htmlFieldSetElement.appendChild(htmlParagraphElement);
+
+
+
 }
 
 function connectWebSocket() {

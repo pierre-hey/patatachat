@@ -5,9 +5,6 @@
 <head>
     <meta charset="UTF-8">
     <title>Patatachat !</title>
-    <script type="text/javascript" th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
-    <script type="text/javascript" th:src="@{/webjars/sockjs-client/sockjs.min.js}"></script>
-    <script type="text/javascript" th:src="@{/webjars/stomp-websocket/stomp.min.js}"></script>
     <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
     <link th:href="@{/css/style-global.css}" rel="stylesheet"/>
 </head>
@@ -18,6 +15,7 @@
     <!-- Begin page content -->
     <div class="container">
         <div class="row">
+
             <div class="col-md-12 overflow-auto message-area" id="messageArea"></div>
             <hr class="hr"/>
 
@@ -29,6 +27,11 @@
                         <!-- TODO : On peut faire plus propre pour le userName-->
                         <h3 id="userName" sec:authorize="isAuthenticated()" sec:authentication="name"
                             th:hidden="true"></h3>
+                    </div>
+
+                    <div class="connecting alert alert-warning alert-dismissible fade show mb-2" role="alert">
+                        <button type="button" class="btn-close px-2 py-1" data-bs-dismiss="alert"
+                                aria-label="Close" id="close-alert"></button>
                     </div>
                     <button type="submit" class="form-group btn btn-dark w-100 custom-input">Envoyer</button>
                 </form>
@@ -42,6 +45,9 @@
     </div>
 </div>
 
+<script type="text/javascript" th:src="@{/webjars/sockjs-client/sockjs.min.js}"></script>
+<script type="text/javascript" th:src="@{/webjars/stomp-websocket/stomp.min.js}"></script>
+<script type="text/javascript" th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
 <script th:src=" @{/js/main.js}"></script>
 </body>
 </html>

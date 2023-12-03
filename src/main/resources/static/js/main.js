@@ -28,6 +28,10 @@ function fetchPreviousMessages() {
 }
 
 function onConnected() {
+
+     document.getElementById('close-alert').click();
+
+
     // Subscribe to the Public Topic
     fetchPreviousMessages();
     stompClient.subscribe('/topic/public', onMessageReceived);
@@ -35,39 +39,13 @@ function onConnected() {
 
 
 function onError(error) {
-    // connectingElement.textContent = 'Could not connect to WebSocket server. Please refresh this page to try again!';
-    // connectingElement.style.color = 'red';
-    console.log("Erreur WS server ! : " + error)
-    setTimeout(connectWebSocket, 2000); // Reconnexion après 5 secondes
 
+    var htmlStrongElement = document.createElement('strong');
 
-
-    // Créer un élément fieldset et p pour afficher le message
-    var htmlFieldSetElement = document.createElement('fieldset');
-    var htmlParagraphElement = document.createElement('p');
-    htmlFieldSetElement.classList.add('border', 'p-2');
-
-    // Créer un élément legend pour afficher le nom de l'émetteur
-    var htmlLegendElement = document.createElement('legend');
-    htmlLegendElement.classList.add('float-none', 'w-auto', 'p-2', 'fs-6', 'fw-bold');
-
-    // Convertir la chaîne de date en objet Date JavaScript
-    var messageDate = new Date();
-    var formattedDate = messageDate.toLocaleString(); // Formater la date selon vos besoins
-
-    // Créer le texte à insérer dans le html
-    var usernameText = document.createTextNode(error +' - ' + formattedDate);
-    var messageText = document.createTextNode('Could not connect to WebSocket server. Please refresh this page to try again!');
-
-    // Ajout du nom de l'user à son élément
-    htmlLegendElement.appendChild(usernameText);
-    htmlFieldSetElement.appendChild(htmlLegendElement);
-    // Ajout du contenu du message dans le paragraphe
-    htmlParagraphElement.appendChild(messageText);
-    htmlFieldSetElement.appendChild(htmlParagraphElement);
-
-
-
+    htmlStrongElement.textContent = 'Ho non ! Le WebSocket est cassé, attendez !';
+    connectingElement.appendChild(htmlStrongElement);
+    console.log("Erreur WS server ! : " + error);
+    setTimeout(connectWebSocket, 2000); // Reconnexion après 2 secondes
 }
 
 function connectWebSocket() {
@@ -83,7 +61,6 @@ function sendMessage(event) {
 
     var temporaryId = generateTemporaryId();
     var currentDate = new Date().toISOString();
-
 
 
     // Mapping du message si le contenu et le client Stomp existent

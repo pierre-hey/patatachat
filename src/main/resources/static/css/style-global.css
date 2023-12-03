@@ -1,43 +1,57 @@
 html, body {
+    margin: 0;
+    padding: 0;
+    border: 0;
     height: 100%;
+
+    overflow: hidden;
 }
-/*header{
-    height: 5%;
-}*/
+
 body {
     background-color: rgb(59, 59, 59);
     color: #fff;
 }
-.container{
+
+.container {
     background-color: rgb(59, 59, 59);
 }
+
+/* Input */
 textarea {
     resize: none;
 }
 
-.brand {
+.custom-input {
     color: #ffc400;
 }
 
-.brand:hover {
-    color: #b5ff00;
-    text-shadow: 0 0 5px #e4fd06, 0 0 55px #ff6a00, -20px -22px 2px rgba(2, 2, 2, 0);
+/* ######################### */
+
+/* Gestion area */
+
+header {
+    height: 5%;
 }
 
-.custom-textarea {
-    color: #fff;
-}
-.custom-input{
-    color: #ffc400;
-}
-.message-area{
-    height: 70vh;
-}
-.message-form{
-    height: 15vh;
+.message-area {
+    height: 75vh;
 }
 
-.icon{
+.main-area {
+    height: 75vh;
+}
+
+.table-area {
+    height: 90vh;
+}
+
+fieldset {
+    width: 75%;
+}
+
+/* ######################### */
+
+.icon {
     z-index: -1;
     height: 25px;
     width: 25px;
@@ -45,22 +59,7 @@ textarea {
 }
 
 
-.alert {
-    font-size: 12px;
-    margin-bottom: 1px;
-    height: 30px;
-    line-height:30px;
-    padding:0 15px;
-
-}
-
-.table-area{
-    height: 85vh;
-}
-
-
-
-/* Message flash */
+/* Message flash & alert */
 
 .msg-flash {
 
@@ -79,17 +78,56 @@ textarea {
     -webkit-animation-fill-mode: forwards;
     animation-fill-mode: forwards;
 }
+
 @keyframes hide-flash {
     to {
-        width:0;
-        height:0;
-        overflow:hidden;
+        width: 0;
+        height: 0;
+        overflow: hidden;
     }
 }
+
 @-webkit-keyframes hide-flash {
     to {
-        width:0;
-        height:0;
-        visibility:hidden;
+        width: 0;
+        height: 0;
+        visibility: hidden;
     }
 }
+
+.alert {
+    font-size: 12px;
+    margin-bottom: 1px;
+    height: 30px;
+    line-height: 30px;
+    padding: 0 15px;
+}
+
+/* ######################### */
+
+/* Nom appli */
+.brand {
+    color: #ffc400;
+}
+
+.brand:hover {
+    color: #b5ff00;
+    text-shadow: 0 0 5px #e4fd06, 0 0 55px #ff6a00, -20px -22px 2px rgba(2, 2, 2, 0);
+}
+
+/* ######################### */
+
+/* Personnalisation barre de défilement */
+
+/* Pour les navigateurs WebKit (Safari, Chrome, Edge) */
+::-webkit-scrollbar {
+    width: 8px; /* Largeur de la barre de défilement */
+}
+
+/* Pour les navigateurs WebKit (Safari, Chrome, Edge) */
+::-webkit-scrollbar-thumb {
+    background-color: #c97317; /* Couleur de la barre de défilement */
+    border-radius: 6px; /* Rayon des coins de la barre de défilement */
+}
+
+/* ######################### */

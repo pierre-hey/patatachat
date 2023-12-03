@@ -9,39 +9,32 @@
     <link th:href="@{/css/style-global.css}" rel="stylesheet"/>
 </head>
 <body>
-
-<div class="d-flex flex-column h-100 align-items-center justify-content-center">
+<!-- TODO : On peut faire plus propre pour le userName-->
+<span id="userName" sec:authorize="isAuthenticated()" sec:authentication="name" th:hidden="true"></span>
+<div class="vh-100">
     <header th:replace="~{fragments/header :: header}"></header>
+
     <!-- Begin page content -->
-    <div class="container">
-        <div class="row">
+    <div class="container-fluid form-group">
 
-            <div class="col-md-12 overflow-auto message-area" id="messageArea"></div>
-            <hr class="hr"/>
-
-            <div class="col-md-12 message-form">
-                <form id="messageForm" name="messageForm">
-                    <div class="form-group pb-2">
-                        <label for="message">Nouveau Message</label>
-                        <textarea id="message" autocomplete="off" class="form-control bg-dark text-light"></textarea>
-                        <!-- TODO : On peut faire plus propre pour le userName-->
-                        <h3 id="userName" sec:authorize="isAuthenticated()" sec:authentication="name"
-                            th:hidden="true"></h3>
-                    </div>
-
-                    <div class="connecting alert alert-warning alert-dismissible fade show mb-2" role="alert">
-                        <button type="button" class="btn-close px-2 py-1" data-bs-dismiss="alert"
-                                aria-label="Close" id="close-alert"></button>
-                    </div>
-                    <button type="submit" class="form-group btn btn-dark w-100 custom-input">Envoyer</button>
-                </form>
-
-                <form th:if="${isAdmin}" th:action="@{/clear}" method="post">
-                    <input class="btn btn-danger w-100 form-group" type="submit" value="Nettoyer">
-                </form>
-
-            </div>
+        <div class="connecting alert alert-warning alert-dismissible fade show mb-2" role="alert">
+            <button type="button" class="btn-close px-2 py-1" data-bs-dismiss="alert"
+                    aria-label="Close" id="close-alert"></button>
         </div>
+
+        <div class="col-12 overflow-auto message-area mt-2 d-flex flex-column  align-items-center pb-1"
+             id="messageArea"></div>
+
+        <div class="col-12">
+            <form id="messageForm" name="messageForm" class="pb-1 d-flex flex-column  align-items-center border-top">
+                <div class="form-group pb-1 w-75">
+                    <label for="message">Nouveau Message</label>
+                    <textarea id="message" autocomplete="off" class="form-control bg-dark text-light"></textarea>
+                    <button type="submit" class="form-group btn btn-dark w-100 custom-input">Envoyer</button>
+                </div>
+            </form>
+        </div>
+
     </div>
 </div>
 

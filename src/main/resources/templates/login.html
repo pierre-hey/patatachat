@@ -9,50 +9,45 @@
     <title>Login</title>
 </head>
 <body>
-<div class="d-flex flex-column h-100 align-items-center justify-content-center">
+<div class="vh-100">
     <header th:replace="~{fragments/header :: header}"></header>
-
     <!-- Begin page content -->
-    <div class="container">
-        <div class="row">
-            <div class="col-md-6 offset-md-3">
-                <div class="card login-dash my-5 card-content">
-                    <h2 class="text-center mt-5 brand login-form-title">Patatachat</h2>
-                    <div class="text-center mb-5 text-light">Se connecter</div>
+    <div class="d-flex align-items-center justify-content-center main-area">
+        <div class="card login-dash my-5 card-content">
+            <h2 class="text-center mt-5 brand login-form-title">Patatachat</h2>
+            <div class="text-center mb-5 text-light">Se connecter</div>
 
-                    <form class="card-body p-lg-5" method="post" th:action="@{/login}">
-                        <div class="alert alert-danger alert-dismissible fade show mb-2" role="alert"
-                             th:if="${param.error}">
-                            <strong>Ho non !</strong> Identifiant ou mot de passe incorrect
-                            <button type="button" class="btn-close px-2 py-1" data-bs-dismiss="alert"
-                                    aria-label="Close"></button>
-                        </div>
-                        <div class="alert alert-info alert-dismissible fade show mb-2" role="alert"
-                             th:if="${param.logout}">
-                            <strong>Ho non !</strong> Vous avez été déconnecté
-                            <button type="button" class="btn-close px-2 py-1" data-bs-dismiss="alert"
-                                    aria-label="Close"></button>
-                        </div>
-
-                        <div class="mb-3">
-                            <input class="form-control" type="text" id="login" name="login" placeholder="Identifiant"/>
-                        </div>
-
-                        <div class="mb-3">
-                            <input class="form-control" type="password" id="pwd" name="password"
-                                   placeholder="Password"/>
-                        </div>
-
-                        <div class="text-center">
-                            <input class="btn btn-primary w-75 login-button" type="submit" value="Se connecter">
-                        </div>
-                        <div id="emailHelp" class="form-text text-center mb-5 text-light">
-                            Pas de compte ? <a class="text-light fw-bold" th:href="@{/register}">Créer un
-                            compte</a>
-                        </div>
-                    </form>
+            <form class="card-body p-lg-5" method="post" th:action="@{/login}">
+                <div class="alert alert-danger alert-dismissible fade show mb-2" role="alert"
+                     th:if="${param.error}">
+                    <strong>Ho non !</strong> Identifiant ou mot de passe incorrect
+                    <button type="button" class="btn-close px-2 py-1" data-bs-dismiss="alert"
+                            aria-label="Close"></button>
                 </div>
-            </div>
+                <div class="alert alert-info alert-dismissible fade show mb-2" role="alert"
+                     th:if="${param.logout}">
+                    <strong>Ho non !</strong> Vous avez été déconnecté
+                    <button type="button" class="btn-close px-2 py-1" data-bs-dismiss="alert"
+                            aria-label="Close"></button>
+                </div>
+
+                <div class="mb-3">
+                    <input class="form-control" type="text" id="login" name="login" placeholder="Identifiant"/>
+                </div>
+
+                <div class="mb-3">
+                    <input class="form-control" type="password" id="pwd" name="password"
+                           placeholder="Password"/>
+                </div>
+
+                <div class="text-center">
+                    <input class="btn btn-primary w-75 login-button" type="submit" value="Se connecter">
+                </div>
+                <div id="emailHelp" class="form-text text-center mb-5 text-light">
+                    Pas de compte ? <a class="text-light fw-bold" th:href="@{/register}">Créer un
+                    compte</a>
+                </div>
+            </form>
         </div>
     </div>
 </div>

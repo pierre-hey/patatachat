@@ -80,8 +80,8 @@ public class SpringSecurityConfig {
                 // Autorise uniquement les utilisateurs connectés avec le role "ADMIN"
                 .requestMatchers("/administration/**").hasRole("ADMIN")
                 // Autorise uniquement les utilisateurs connectés avec le role "USER"
-                //.requestMatchers("/poc/user").hasRole("USER")
-                //.requestMatchers("/static/**").permitAll().anyRequest().permitAll()
+                // .requestMatchers("/poc/user").hasRole("USER")
+                // .requestMatchers("/static/**").permitAll().anyRequest().permitAll()
                 // .requestMatchers(antMatcher("/users/**")).hasRole("ADMIN")
 
 //                                .requestMatchers("/register/**").permitAll()
@@ -101,7 +101,7 @@ public class SpringSecurityConfig {
                         .usernameParameter("login") // -> Définit quel champ du formulaire est
                         // le "userName" du "UserDetail" de Spring qui correspond
                         // au champ discriminant de l'identification
-                        //.loginProcessingUrl("/login")
+                        // .loginProcessingUrl("/login")
                         .defaultSuccessUrl("/index")
                         .permitAll());
 
@@ -162,19 +162,9 @@ public class SpringSecurityConfig {
                 context.addConstraint(securityConstraint);
             }
         };
-//        tomcat.addAdditionalTomcatConnectors(redirectConnector());
         tomcat.addAdditionalTomcatConnectors(redirectConnector());
         return tomcat;
     }
-
-//    private Connector redirectConnector() {
-//        Connector connector = new Connector("org.apache.coyote.http11.Http11NioProtocol");
-//        connector.setScheme("http");
-//        connector.setPort(8080);
-//        connector.setSecure(false);
-//        connector.setRedirectPort(55555);
-//        return connector;
-//    }
 
     private Connector redirectConnector() {
         Connector connector = new Connector("org.apache.coyote.http11.Http11NioProtocol");

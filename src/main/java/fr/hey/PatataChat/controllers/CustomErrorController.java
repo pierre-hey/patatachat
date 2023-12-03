@@ -10,16 +10,24 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.text.MessageFormat;
+
 @Controller
 public class CustomErrorController implements ErrorController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(UserController.class);
 
     @RequestMapping("/error")
-    public ModelAndView handleConflict403(HttpServletRequest request) {
+    public ModelAndView handleErrorHttp(HttpServletRequest request) {
 
         Object status = request.getAttribute(RequestDispatcher.ERROR_STATUS_CODE);
-        LOGGER.info("Erreur : " + status);
+        Object uri = request.getAttribute(RequestDispatcher.FORWARD_REQUEST_URI);
+        Object uriQuery = request.getAttribute(RequestDispatcher.FORWARD_QUERY_STRING);
+        String remoteUser = request.getRemoteUser();
+        String sessionId = request.getRequestedSessionId();
+
+        LOGGER.error(MessageFormat.format("User: {0} - SessionId: {1}  - Http Error: {2} - URI: {3} - Query: {4}",
+                remoteUser,sessionId, status, uri, uriQuery));
 
         ModelAndView modelAndView = new ModelAndView();
 
@@ -36,9 +44,6 @@ public class CustomErrorController implements ErrorController {
         } else {
             modelAndView.setViewName("error/error");
         }
-
-        // Ajouter des objets au modèle si nécessaire
-        modelAndView.addObject("customAttribute", "valeur");
 
         return modelAndView;
     }

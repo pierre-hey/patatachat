@@ -29,7 +29,7 @@ function fetchPreviousMessages() {
 
 function onConnected() {
 
-     document.getElementById('close-alert').click();
+    document.getElementById('close-alert').click();
 
 
     // Subscribe to the Public Topic
@@ -89,14 +89,16 @@ function onMessageReceived(payload) {
 }
 
 function mapMessageToHtmlElement(message) {
-    // Créer un élément fieldset et p pour afficher le message
+    // Créer un élément fieldset pour contenir le message
     var htmlFieldSetElement = document.createElement('fieldset');
-    var htmlParagraphElement = document.createElement('p');
     htmlFieldSetElement.classList.add('border', 'p-2');
 
     // Créer un élément legend pour afficher le nom de l'émetteur
     var htmlLegendElement = document.createElement('legend');
     htmlLegendElement.classList.add('float-none', 'w-auto', 'p-2', 'fs-6', 'fw-bold');
+
+    // Créer un élément paragraph pour contenir le contenu du message
+    var htmlParagraphElement = document.createElement('p');
 
     // Convertir la chaîne de date en objet Date JavaScript
     var messageDate = new Date(message.messageDateTime);
@@ -116,7 +118,7 @@ function mapMessageToHtmlElement(message) {
     // Ajout de l'ensemble du fieldsSet dans la zone message du DOM
     messageArea.insertBefore(htmlFieldSetElement, messageArea.firstChild);
 
-    // Utile si on veut que le scroll soit en bas quand on get la page
+    // Utile si on veut que le scroll soit en bas quand on charge la page
     // messageArea.scrollTop = messageArea.scrollHeight;
 }
 

@@ -9,46 +9,39 @@
     <title>Register</title>
 </head>
 <body>
-
-<div class="d-flex flex-column h-100 align-items-center justify-content-center">
+<div class="vh-100">
     <header th:replace="~{fragments/header :: header}"></header>
-    <div class="container">
-        <div class="row">
+    <div class="d-flex align-items-center justify-content-center main-area">
+        <div class="card login-dash my-5 card-content">
+            <h2 class="text-center mt-5 brand login-form-title">Patatachat</h2>
+            <div class="text-center mb-5 text-light">Créer un compte</div>
 
-            <div class="col-md-6 offset-md-3">
-                <div class="card login-dash my-5 card-content">
-                    <h2 class="text-center mt-5 brand">Patatachat</h2>
-                    <div class="text-center mb-5 text-light">Créer un compte</div>
-
-                    <form class="card-body p-lg-5" method="post" th:action="@{/register}" th:object="${userDto}">
-                        <div class="mb-3">
-                            <input class="form-control" type="text" id="login" name="login" placeholder="Login"/>
-                            <p th:if="${#fields.hasErrors('login')}" th:errors="*{login}"></p>
-                        </div>
-                        <div class="mb-3">
-                            <input class="form-control" type="password" id="pwd" name="password"
-                                   placeholder="Password"/>
-                            <p th:each="error : ${#fields.errors('password')}" th:text="${error}"> Validation error</p>
-                        </div>
-                        <div class="mb-3">
-                            <input class="form-control" type="password" id="pwd2" name="matchingPassword"
-                                   placeholder="Valider le mot de passe"
-                                   th:field="*{matchingPassword}"/>
-                            <p th:each="error : ${#fields.errors('matchingPassword')}"
-                               th:text="${error}">Validation error</p>
-                            <p th:each="error : ${#fields.errors('global')}" th:text="${error}"> Validation error</p>
-                        </div>
-                        <div class="text-center">
-                            <input class="btn btn-primary w-75 login-button" type="submit" value="Créer un compte">
-                        </div>
-                        <div id="emailHelp" class="form-text text-center mb-5 text-light">
-                            Vous avez déjà un compte ? <a class="text-light fw-bold" th:href="@{/login}">Se
-                            connecter</a>
-                        </div>
-                    </form>
-
+            <form class="card-body p-lg-5" method="post" th:action="@{/register}" th:object="${userDto}">
+                <div class="mb-3">
+                    <input class="form-control" type="text" id="login" name="login" placeholder="Login"/>
+                    <p th:if="${#fields.hasErrors('login')}" th:errors="*{login}"></p>
                 </div>
-            </div>
+                <div class="mb-3">
+                    <input class="form-control" type="password" id="pwd" name="password"
+                           placeholder="Password"/>
+                    <p th:each="error : ${#fields.errors('password')}" th:text="${error}"> Validation error</p>
+                </div>
+                <div class="mb-3">
+                    <input class="form-control" type="password" id="pwd2" name="matchingPassword"
+                           placeholder="Valider le mot de passe"
+                           th:field="*{matchingPassword}"/>
+                    <p th:each="error : ${#fields.errors('matchingPassword')}"
+                       th:text="${error}">Validation error</p>
+                    <p th:each="error : ${#fields.errors('global')}" th:text="${error}"> Validation error</p>
+                </div>
+                <div class="text-center">
+                    <input class="btn btn-primary w-75 login-button" type="submit" value="Créer un compte">
+                </div>
+                <div id="emailHelp" class="form-text text-center mb-5 text-light">
+                    Vous avez déjà un compte ? <a class="text-light fw-bold" th:href="@{/login}">Se
+                    connecter</a>
+                </div>
+            </form>
         </div>
     </div>
 </div>

@@ -110,7 +110,7 @@ public class SpringSecurityConfig {
                         .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
                         .permitAll());
 
-        http.requiresChannel(channel -> channel.anyRequest().requiresSecure())
+//        http.requiresChannel(channel -> channel.anyRequest().requiresSecure())
 //                .portMapper()
 //                .http(8080).mapsTo(8443)
 //                .http(80).mapsTo(443)
